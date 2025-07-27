@@ -1,2 +1,21 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+
+# Environment variables
 .env
-.venv
+
+# Poetry files
+poetry.lock
+
+# macOS
+.DS_Store
+
+# Replit
+.replit/
+replit.nix
