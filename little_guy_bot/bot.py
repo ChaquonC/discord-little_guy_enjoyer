@@ -9,9 +9,21 @@ from dotenv import load_dotenv
 from little_guy_bot.pikmin import PIKMIN_TYPES
 from zoneinfo import ZoneInfo
 import random
-from little_guy_bot.lifeline import keep_alive
+from flask import Flask
+from threading import Thread
 
-keep_alive()
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "I'm alive!"
+
+def run():
+    app.run(host='0.0.0.0', port=5000)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
 
 
 TIMEZONE = ZoneInfo("America/Chicago")
@@ -151,5 +163,5 @@ async def on_message_edit(before, after):
     if after.author.id == SECRET:
         await after.channel.send("STICK TO YOUR WORD GRUG")
 
-
+keep_alive()
 bot.run(TOKEN)
