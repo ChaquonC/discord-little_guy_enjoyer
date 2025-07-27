@@ -43,9 +43,9 @@ async def daily_pikmin(channel):
             num = random.randint(0, 9)
     pikmin = PIKMIN_TYPES[num]
     if pikmin.get('owner'):
-        await channel.send(content=f"Today's pikmin is {pikmin['name']} {pikmin['owner']}'s favorite", file={pikmin['image']})
+        await channel.send(content=f"Today's pikmin is {pikmin['name']} {pikmin['owner']}'s favorite", file=discord.File(pikmin['image']))
     else:
-        await channel.send(content=f"Today's pikmin is {pikmin['name']}", file={pikmin['image']})
+        await channel.send(content=f"Today's pikmin is {pikmin['name']}", file=discord.File(pikmin['image']))
     bot_data['pikmin_choosen_this_cycle'].append(num)
     bot_data['current_pikmin_of_the_day'] = pikmin
 
@@ -77,9 +77,9 @@ async def on_ready():
 async def get_daily_pikmin(ctx):
     pikmin = bot_data['current_pikmin_of_the_day']
     if pikmin.get('owner'):
-        await ctx.send(content=f"Today's pikmin is {pikmin['name']} {pikmin['owner']}'s favorite", file={pikmin['image']})
+        await ctx.send(content=f"Today's pikmin is {pikmin['name']} {pikmin['owner']}'s favorite", file=discord.File(pikmin['image']))
     else:
-        await ctx.send(content=f"Today's pikmin is {pikmin['name']}", file={pikmin['image']})
+        await ctx.send(content=f"Today's pikmin is {pikmin['name']}", file=discord.File(pikmin['image']))
 
 
 @bot.command(name="say")
