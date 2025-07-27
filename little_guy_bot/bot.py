@@ -90,7 +90,7 @@ async def on_ready():
                     await daily_pikmin(channel)
                 else:
                     print("✅ Pikmin already set, waiting for next 8 AM cycle.")
-                await channel.send('little guy version 1.2.1 (bug fix and new chat interactions!)')
+                await channel.send('little guy version 1.2.2 (the gay update)')
 
     print(f"✅  Logged in as {bot.user} ({bot.user.id})")
 
@@ -157,11 +157,11 @@ async def on_message(message):
         if message.author.bot:
             return
         await message.channel.send('no one wants your nasty protein hacks')
-    content = message.content.lower()
-    if message.author.id == B and not message.author.bot and (
-            "good morning" in content or ("good" in content and "morning" in content)):
-        if message.author.bot:
-            return
+    if message.author.id == B:
+        content = message.content.lower()
+        if not message.author.bot and ("good morning" in content or ("good" in content and "morning" in content)):
+            if message.author.bot:
+                return
         await message.channel.send('Goodmorning Goonbee')
     if 'inward' in str(message.content).lower():
         random_num = random.randint(0, 1)
@@ -191,6 +191,10 @@ async def on_message(message):
         if message.author.bot:
             return
         await message.channel.send('troll droun RIP bro')
+    if 'lgbtq' in str(message.content).lower():
+        if message.author.bot:
+            return
+        await message.channel.send('I am indeed loquaciously gregarious but tantalisingly quirky')
 
     await bot.process_commands(message)
 
