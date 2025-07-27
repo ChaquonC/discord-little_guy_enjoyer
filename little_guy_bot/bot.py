@@ -90,7 +90,7 @@ async def on_ready():
                     await daily_pikmin(channel)
                 else:
                     print("✅ Pikmin already set, waiting for next 8 AM cycle.")
-
+                await channel.send('little guy version 1.2 (bug fix and new chat interactions!)')
 
     print(f"✅  Logged in as {bot.user} ({bot.user.id})")
 
@@ -131,13 +131,12 @@ async def on_message_delete(message):
 
 @bot.event
 async def on_reaction_add(reaction, user):
-
     if user.bot:
         return
     if reaction.emoji == "‼️" and reaction.message.author.bot:
         await reaction.message.channel.send("‼️")
-    if reaction.emoji == ":ratge:" and reaction.guild == SERVER:
-        await reaction.message.channel.send(":sillycat:")
+    if reaction.emoji.id == 1197383106831859802 and reaction.guild.id == SERVER:
+        await reaction.message.channel.send("<:sillycat:1099497749256343642>")
 
 
 @bot.event
@@ -157,14 +156,38 @@ async def on_message(message):
         if message.author.bot:
             return
         await message.channel.send('no one wants your nasty protein hacks')
-    if ('good' and 'morning' in str(message.content)) and (message.author.id == B):
+    if ('good' in message.content.lower() and 'morning' in message.content.lower()) and (message.author.id == B):
         if message.author.bot:
             return
         await message.channel.send('Goodmorning Goonbee')
     if 'inward' in str(message.content).lower():
+        random_num = random.randint(0, 1)
         if message.author.bot:
             return
-        await message.channel.send('inwards be like *pikmin*')
+        if random_num == 0:
+            await message.channel.send('inwards be like *pikmin*')
+        else:
+            await message.channel.send('all my inwards **LOVE** pikmin')
+    if 'clanker' in str(message.content).lower():
+        if message.author.bot:
+            return
+        await message.channel.send("but if I said hard R **I'm** the problem...")
+    if 'inwaRd' in str(message.content).lower():
+        if message.author.bot:
+            return
+        await message.channel.send("WATCH YOUR MOUTH!")
+    if 'treat' in str(message.content).lower():
+        if message.author.bot:
+            return
+        await message.channel.send("did someone say sweetie treatie???")
+    if 'sybau' in str(message.content).lower():
+        if message.author.bot:
+            return
+        await message.channel.send('stay young beautiful authentic and unique twin')
+    if 'troll' in str(message.content).lower():
+        if message.author.bot:
+            return
+        await message.channel.send('troll droun RIP bro')
 
     await bot.process_commands(message)
 
