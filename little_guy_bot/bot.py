@@ -120,11 +120,11 @@ async def on_member_ban(guild, user):
 
 @bot.event
 async def on_message(message):
-    if 'lebron' or 'adam smasher' in message.lower():
+    if 'lebron' or 'adam smasher' in str(message).lower():
         message.channel.send('THE GOAT')
-    if 'protein' in message.lower():
+    if 'protein' in str(message).lower():
         message.channel.send('no one wants your nasty protein hacks')
-    if ('good' and 'morning' in message) and (message.author.id == B):
+    if ('good' and 'morning' in str(message)) and (message.author.id == B):
         message.channel.send('Goodmorning Goonbee')
 
 
