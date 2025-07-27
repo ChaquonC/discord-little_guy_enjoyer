@@ -2,6 +2,7 @@ import asyncio
 from datetime import datetime, timedelta
 
 import discord
+from discord.app_commands import describe
 from discord.ext import commands, tasks
 import os
 from dotenv import load_dotenv
@@ -19,6 +20,7 @@ load_dotenv()
 TOKEN = os.getenv("BOT_SECRET")
 SECRET = os.getenv("HIS_ID")
 B = os.getenv('USER1')
+SERVER = os.getenv('GOAT_SERVER')
 
 intents = discord.Intents.default()
 intents.message_content = True  # Needed to read message content
@@ -43,7 +45,8 @@ async def daily_pikmin(channel):
             num = random.randint(0, 9)
     pikmin = PIKMIN_TYPES[num]
     if pikmin.get('owner'):
-        await channel.send(content=f"Today's pikmin is {pikmin['name']} {pikmin['owner']}'s favorite", file=discord.File(pikmin['image']))
+        user = await bot.fetch_user(pikmin['owner'])
+        await channel.send(content=f"Today's pikmin is {pikmin['name']} {user.name}'s favorite", file=discord.File(pikmin['image']))
     else:
         await channel.send(content=f"Today's pikmin is {pikmin['name']}", file=discord.File(pikmin['image']))
     bot_data['pikmin_choosen_this_cycle'].append(num)
@@ -73,16 +76,17 @@ async def on_ready():
     print(f"✅  Logged in as {bot.user} ({bot.user.id})")
 
 
-@bot.command(name="daily")
+@bot.command(name="daily", help="get today's pikmin of the day")
 async def get_daily_pikmin(ctx):
     pikmin = bot_data['current_pikmin_of_the_day']
     if pikmin.get('owner'):
-        await ctx.send(content=f"Today's pikmin is {pikmin['name']} {pikmin['owner']}'s favorite", file=discord.File(pikmin['image']))
+        user = await bot.fetch_user(pikmin['owner'])
+        await ctx.send(content=f"Today's pikmin is {pikmin['name']} {user.name}'s favorite", file=discord.File(pikmin['image']))
     else:
         await ctx.send(content=f"Today's pikmin is {pikmin['name']}", file=discord.File(pikmin['image']))
 
 
-@bot.command(name="say")
+@bot.command(name="say", help='make the little guy say whatever..........use wisely')
 async def say(ctx, *, message: str):
     await ctx.send(message)
 
@@ -105,10 +109,13 @@ async def on_message_delete(message):
 
 @bot.event
 async def on_reaction_add(reaction, user):
+
     if user.bot:
         return
-    if reaction.emoji == "‼️":
-        reaction.message.channel.send("‼️")
+    if reaction.emoji == "‼️" and reaction.message.author.bot:
+        await reaction.message.channel.send("‼️")
+    if reaction.emoji == ":ratge:" and reaction.guild == SERVER:
+        await reaction.message.channel.send(":sillycat:")
 
 
 @bot.event
@@ -120,13 +127,24 @@ async def on_member_ban(guild, user):
 
 @bot.event
 async def on_message(message):
-    if 'lebron' or 'adam smasher' in str(message).lower():
-        message.channel.send('THE GOAT')
-    if 'protein' in str(message).lower():
-        message.channel.send('no one wants your nasty protein hacks')
-    if ('good' and 'morning' in str(message)) and (message.author.id == B):
-        message.channel.send('Goodmorning Goonbee')
+    if 'lebron' in str(message.content).lower() or ('adam' and 'smasher') in str(message.content).lower():
+        if message.author.bot:
+            return
+        await message.channel.send('THE GOAT')
+    if 'protein' in str(message.content).lower():
+        if message.author.bot:
+            return
+        await message.channel.send('no one wants your nasty protein hacks')
+    if ('good' and 'morning' in str(message.content)) and (message.author.id == B):
+        if message.author.bot:
+            return
+        await message.channel.send('Goodmorning Goonbee')
+    if 'inward' in str(message.content).lower():
+        if message.author.bot:
+            return
+        await message.channel.send('inwards be like *pikmin*')
 
+    await bot.process_commands(message)
 
 @bot.event
 async def on_message_edit(before, after):
