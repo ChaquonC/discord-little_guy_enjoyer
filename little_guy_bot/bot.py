@@ -55,8 +55,8 @@ async def daily_pikmin(channel):
         while num in bot_data['pikmin_choosen_this_cycle']:
             num = random.randint(0, 9)
     pikmin = PIKMIN_TYPES[num]
-    if pikmin.get('owner'):
-        user = await bot.fetch_user(pikmin['owner'])
+    if pikmin.get('parent'):
+        user = await bot.fetch_user(pikmin['parent'])
         await channel.send(content=f"Today's pikmin is {pikmin['name']} {user.name}'s favorite", file=discord.File(pikmin['image']))
     else:
         await channel.send(content=f"Today's pikmin is {pikmin['name']}", file=discord.File(pikmin['image']))
@@ -101,8 +101,8 @@ async def get_daily_pikmin(ctx):
     if pikmin is None:
         await ctx.send("No pikmin of the day has been chosen yet!")
         return
-    if pikmin.get('owner'):
-        user = await bot.fetch_user(pikmin['owner'])
+    if pikmin.get('parent'):
+        user = await bot.fetch_user(pikmin['parent'])
         await ctx.send(content=f"Today's pikmin is {pikmin['name']} {user.name}'s favorite", file=discord.File(pikmin['image']))
     else:
         await ctx.send(content=f"Today's pikmin is {pikmin['name']}", file=discord.File(pikmin['image']))

@@ -46,7 +46,7 @@ PIKMIN_TYPES = {
     8: {
         'name': 'Glow Pikmin',
         'image': resources.glow_pikmin,
-        'owner': T
+        'parent': T
     },
     9: {
         'name': 'bulbmin',
