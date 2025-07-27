@@ -8,6 +8,10 @@ from dotenv import load_dotenv
 from little_guy_bot.pikmin import PIKMIN_TYPES
 from zoneinfo import ZoneInfo
 import random
+from lifeline import keep_alive
+
+keep_alive()
+
 
 TIMEZONE = ZoneInfo("America/Chicago")
 
