@@ -1,0 +1,6 @@
+[virtualenvs]
+create = true
+in-project = true
+
+[repositories.my-private-repo]
+url = "https://github.com/ChaquonC/discord-little_guy_enjoyer"

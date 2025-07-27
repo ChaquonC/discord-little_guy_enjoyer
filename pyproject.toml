@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "little-guy-bot"
+version = "0.1.0"
+description = "Bot to add little guy amazingness into your discord"
+authors = ["Chaquon Cloud <chaquonc@gmail.com>"]
+readme = "README.md"
+packages = [{ include = "little_guy_bot" }]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+'discord.py' = "^2.3.2"
+python-dotenv = "^1.0.1"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
