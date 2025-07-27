@@ -90,7 +90,7 @@ async def on_ready():
                     await daily_pikmin(channel)
                 else:
                     print("✅ Pikmin already set, waiting for next 8 AM cycle.")
-                await channel.send('little guy version 1.2 (bug fix and new chat interactions!)')
+                await channel.send('little guy version 1.2.1 (bug fix and new chat interactions!)')
 
     print(f"✅  Logged in as {bot.user} ({bot.user.id})")
 
@@ -135,8 +135,9 @@ async def on_reaction_add(reaction, user):
         return
     if reaction.emoji == "‼️" and reaction.message.author.bot:
         await reaction.message.channel.send("‼️")
-    if reaction.emoji.id == 1197383106831859802 and reaction.guild.id == SERVER:
-        await reaction.message.channel.send("<:sillycat:1099497749256343642>")
+    if isinstance(reaction.emoji, discord.PartialEmoji):
+        if reaction.emoji.id == 1197383106831859802 and reaction.message.guild.id == SERVER:
+            await reaction.message.channel.send("<:sillycat:1099497749256343642>")
 
 
 @bot.event
@@ -156,7 +157,9 @@ async def on_message(message):
         if message.author.bot:
             return
         await message.channel.send('no one wants your nasty protein hacks')
-    if ('good' in message.content.lower() and 'morning' in message.content.lower()) and (message.author.id == B):
+    content = message.content.lower()
+    if message.author.id == B and not message.author.bot and (
+            "good morning" in content or ("good" in content and "morning" in content)):
         if message.author.bot:
             return
         await message.channel.send('Goodmorning Goonbee')
@@ -172,7 +175,7 @@ async def on_message(message):
         if message.author.bot:
             return
         await message.channel.send("but if I said hard R **I'm** the problem...")
-    if 'inwaRd' in str(message.content).lower():
+    if 'inwaRd' in str(message.content):
         if message.author.bot:
             return
         await message.channel.send("WATCH YOUR MOUTH!")
