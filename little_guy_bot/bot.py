@@ -85,11 +85,11 @@ async def on_ready():
                 bot_data['general'] = channel
                 if not daily_pikmin.is_running():
                     daily_pikmin.start(channel)
-
-                now = datetime.now(TIMEZONE)
-                if now.hour < 8:
-                    print("📢 Early morning startup — pre-8AM. Running daily_pikmin manually now.")
+                if bot_data['current_pikmin_of_the_day'] is None:
+                    print("🚀 No current pikmin — running daily_pikmin immediately.")
                     await daily_pikmin(channel)
+                else:
+                    print("✅ Pikmin already set, waiting for next 8 AM cycle.")
 
 
     print(f"✅  Logged in as {bot.user} ({bot.user.id})")
@@ -98,6 +98,9 @@ async def on_ready():
 @bot.command(name="daily", help="get today's pikmin of the day")
 async def get_daily_pikmin(ctx):
     pikmin = bot_data['current_pikmin_of_the_day']
+    if pikmin is None:
+        await ctx.send("No pikmin of the day has been chosen yet!")
+        return
     if pikmin.get('owner'):
         user = await bot.fetch_user(pikmin['owner'])
         await ctx.send(content=f"Today's pikmin is {pikmin['name']} {user.name}'s favorite", file=discord.File(pikmin['image']))
