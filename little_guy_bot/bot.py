@@ -67,13 +67,13 @@ async def daily_pikmin(channel):
 @daily_pikmin.before_loop
 async def before():
     now = datetime.now(TIMEZONE)
-    next_8am = now.replace(hour=16, minute=0, second=0, microsecond=0)
+    next_8am = now.replace(hour=8, minute=0, second=0, microsecond=0)
 
     if now >= next_8am:
         next_8am += timedelta(days=1)
 
     seconds_until = (next_8am - now).total_seconds()
-    print(f"Waiting {seconds_until:.0f} seconds until next 4PM CST/CDT.")
+    print(f"Waiting {seconds_until:.0f} seconds until next 8AM CST/CDT.")
     await asyncio.sleep(seconds_until)
 
 
@@ -87,7 +87,7 @@ async def on_ready():
                     daily_pikmin.start(channel)
 
                 now = datetime.now(TIMEZONE)
-                if now.hour < 16:
+                if now.hour < 8:
                     print("📢 Early morning startup — pre-8AM. Running daily_pikmin manually now.")
                     await daily_pikmin(channel)
 
