@@ -85,12 +85,7 @@ async def on_ready():
                 bot_data['general'] = channel
                 if not daily_pikmin.is_running():
                     daily_pikmin.start(channel)
-                if bot_data['current_pikmin_of_the_day'] is None:
-                    print("🚀 No current pikmin — running daily_pikmin immediately.")
-                    await daily_pikmin(channel)
-                else:
-                    print("✅ Pikmin already set, waiting for next 8 AM cycle.")
-                await channel.send('little guy version 1.2.2 (the gay update)')
+                await channel.send("I'm back from the dead, new me fr")
 
     print(f"✅  Logged in as {bot.user} ({bot.user.id})")
 
@@ -110,6 +105,9 @@ async def get_daily_pikmin(ctx):
 
 @bot.command(name="say", help='make the little guy say whatever..........use wisely')
 async def say(ctx, *, message: str):
+    if 'you look like a fuckable cut of meat' in message:
+        ctx.send("I am")
+        return
     await ctx.send(message)
 
 
